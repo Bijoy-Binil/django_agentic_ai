@@ -318,10 +318,10 @@
       <!-- CHAT BOX -->
        <div id="chat-box" class="card">
         <!-- Header -->
-         <div class="card-header d-flex aligns-items-center">
-           <div style="width:8px;height:8px; border-radius:50% ;background-color:green;gap: 2px; "></div>
-           <span class="fw-semibold" style="font-size: 13px;">Support Agent</span>
-         </div>
+         <div class="card-header d-flex align-items-center gap-2">
+  <div style="width:8px; height:8px; border-radius:50%; background-color:#22c55e;"></div>
+  <span class="fw-semibold" style="font-size:13px;">Support Agent</span>
+</div>
          <!-- Chat Area -->
           <div id="chat-message" class="chat-messages p-3 d-flex flex-column gap-2" >
             <div class="agent-message p-2 px-3" style="font-size: 13px; max-width: 80%;">
@@ -374,14 +374,12 @@ appendMessage(message,"customer")
 
 input.value="";
   }
+function showChat(){
+   document.querySelector(".help-card").style.display = "none";
 
-  function showChat(){
-     document.getElementById("help-card").style.display = "none"
-     const chatBox =document.getElementById("chat-box");
-     chatBox.classList.add("visible")
-     
-    }
-
+   const chatBox = document.getElementById("chat-box");
+   chatBox.classList.add("visible");
+}
 
 
   document.getElementById("chat-input").addEventListener("keydown",function(e){
