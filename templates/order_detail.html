@@ -316,7 +316,7 @@
         <button onclick="showChat()"id="help-card" class="btn-help">Get Help</button>
       </div>
       <!-- CHAT BOX -->
-       <div id="chat-box" class="card">
+       <div id="chat-box" class="card ">
         <!-- Header -->
          <div class="card-header d-flex align-items-center gap-2">
   <div style="width:8px; height:8px; border-radius:50%; background-color:#22c55e;"></div>
@@ -331,8 +331,9 @@
           
             <!-- Chat Footer -->
           <div class="card-footer d-flex">
-            <input type="text" id="chat-input" class="form-control form-control-sm" placeholder="Type your message....">
-            <button class="btn btn-dark btn-sm" onclick="sendMessage()">Send</button>
+            <input type="text" id="chat-input" 
+            class="form-control form-control-sm" placeholder="Type your message....">
+            <button id="send-btn" class="btn btn-dark btn-sm" onclick="sendMessage()">Send</button>
           </div>
 
        </div>
@@ -347,9 +348,20 @@
 
 </div>
 <script>
+function showTyping(div){
+  const messages = document.getElementById("chat-message");
 
-
-  function appendMessage(text,type){
+  messages.insertAdjacentHTML("beforeend",`
+  <div id="typing-indicator" class="agent-message p-2" style="font-size:13px;max-width:85%;">
+    Typing...
+    </div>
+  `)
+  messages.scrollTop=messages.scrollHeight
+}
+function hideTyping(){
+  document.getElementById("typing-indicator").remove();
+}
+  function appendMessage  (text,type){
   
       const messages = document.getElementById("chat-message");
       
@@ -360,20 +372,40 @@
       div.style.maxWidth="85%";
       div.innerText=text;
 
-   
-      messages.appendChild(div)
+       
+      messages.appendChild(div);
+      messages.scrollTop=messages.scrollHeight;
   }
 
 
-  function sendMessage(){
+  
+ async function sendMessage(){
+ 
     const input = document.getElementById("chat-input");
     const message = input.value.trim();
-
     if(!message) return null
 appendMessage(message,"customer")
 
 input.value="";
+setTimeout(()=>showTyping(),1000)
+;
+try {
+  const response =await fetch("/support/chat/{{order.id}}",{
+    method:"POST",
+    headers:{ "content-Type":"application/json",
+    "X-CSRFToken":"{{csrf_token}}"},
+    body:JSON.stringify({message:message})
+  })
+  const data = await response.json();
+  hideTyping()
+  appendMessage(data.reply,"agent")
+} catch (error) {
+  console.error("Error:", error)
+  appendMessage("Sorry something went wrong","agent")
+}
+
   }
+
 function showChat(){
    document.querySelector(".help-card").style.display = "none";
 
