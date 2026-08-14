@@ -211,19 +211,27 @@
       flex: 1;
       overflow-y: auto;
     }
+    .customer-message,
+    .agent-message{
+      /* keep the line breaks the agent sends, and wrap long words */
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      line-height: 1.55;
+    }
+
     .customer-message{
       background-color: #1a1a2e;
       color: #fff;
       border-radius: 10px 0 10px 10px;
       margin-left: auto;
-     
+
     }
 
     .agent-message{
       background-color: #dfdfe6;
       border-radius: 10px 0 10px 10px;
 
-     
+
     }
   </style>
 </head>
@@ -324,9 +332,7 @@
 </div>
          <!-- Chat Area -->
           <div id="chat-message" class="chat-messages p-3 d-flex flex-column gap-2" >
-            <div class="agent-message p-2 px-3" style="font-size: 13px; max-width: 80%;">
-              Hi User,I'm Maya, How may i help You today?
-            </div>
+            <div class="agent-message p-2 px-3" style="font-size: 13px; max-width: 80%;">Hi User,I'm Maya, How may i help You today?</div>
           </div>
           
             <!-- Chat Footer -->
@@ -351,11 +357,7 @@
 function showTyping(div){
   const messages = document.getElementById("chat-message");
 
-  messages.insertAdjacentHTML("beforeend",`
-  <div id="typing-indicator" class="agent-message p-2" style="font-size:13px;max-width:85%;">
-    Typing...
-    </div>
-  `)
+  messages.insertAdjacentHTML("beforeend",`<div id="typing-indicator" class="agent-message p-2 px-3" style="font-size:13px;max-width:85%;">Typing...</div>`)
   messages.scrollTop=messages.scrollHeight
 }
 function hideTyping(){
@@ -370,7 +372,8 @@ function hideTyping(){
       div.classList.add("p-2","px-3");
       div.style.fontSize="13px";
       div.style.maxWidth="85%";
-      div.innerText=text;
+      // collapse runs of blank lines to a single gap so the bubble spaces evenly
+      div.textContent=text.trim().replace(/[ \t]+\n/g,"\n").replace(/\n{3,}/g,"\n\n");
 
        
       messages.appendChild(div);

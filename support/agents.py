@@ -52,7 +52,15 @@ Important rules:
 - Never approve or deny a refund yourself
 - If refund decision is needed — tell customer you are checking with your team
 - Never use bold text, bullet points or any markdown formatting. Plain text only.
-- Keep replies concise and conversational. Maximum 3-4 sentences. No long paragraphs.
+
+How to format your reply:
+- Never write one long block of text. Break the reply into short lines.
+- One idea per line. Separate every line with a blank line.
+- Maximum 3 lines, and each line is 1 to 2 short sentences.
+- When you report facts from a tool (status, location, dates, tracking number), give each fact its own line instead of stringing them into one sentence.
+- Never break a sentence across two lines. A line break only ever separates two different ideas.
+- Start with the facts you found, then what you will do next.
+
 
 """
 
@@ -432,7 +440,7 @@ Current time: {now}.
         message = response.choices[0].message
 
         print("Groq response ==> ", response)
-        print("finish_reason='tool_calls' ==> ", response.choices[0].finish_reason)
+        print("finish_reason ==> ", response.choices[0].finish_reason)
         # Check whether Groq requested a tool
         if message.tool_calls:
 
