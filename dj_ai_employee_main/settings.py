@@ -134,3 +134,9 @@ LOGIN_URL = '/login'
 
 ANTHROPIC_API_KEY=config("ANTHROPIC_API_KEY")
 ANTHROPIC_MODEL=config("ANTHROPIC_MODEL")
+
+GEMINI_API_KEY = config("GEMINI_API_KEY")
+GEMINI_MODEL = "ggemini-3.5-flash-lite"
+
+GROQ_API_KEY=config("GROQ_API_KEY")
+GROQ_MODEL = "openai/gpt-oss-120b"

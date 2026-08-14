@@ -15,8 +15,8 @@ def order_detail(request,order_id):
     order =get_object_or_404(Order,id=order_id,user=request.user)
     #get refund history
     refunds=RefundRequest.objects.filter(order=order)
-    print("refunds==>",refunds)
-    print("order==>",order)
+    # print("refunds==>",refunds)
+    # print("order==>",order)
     context ={
         "order":order,
         "refunds":refunds

@@ -23,10 +23,10 @@ def chat(request,order_id):
         Message.objects.create(conversation=conversation,role="user",content=user_message)
 
         #Send user message and coversation to LLM
-        reply = run_support_agent(user_message,conversation.id)
+        reply = run_support_agent(user_message,conversation.id,order.id,request.user.id)
         #Store the LLM reply
         Message.objects.create(conversation=conversation,role="agent",content=reply)
 
-        time.sleep(2)
         
-        return JsonResponse({"reply":"Here is the reply"})
+        
+        return JsonResponse({"reply":reply})
